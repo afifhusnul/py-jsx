@@ -1,5 +1,6 @@
 #!/usr/bin/bash
 
+today=`date +"%Y-%m-%d"`
 THE_USER=msa
 THE_DB=amibroker
 THE_TABLE3=t_planlist
@@ -20,4 +21,4 @@ OMG
 wc -l $THE_FILE3
 cat $THE_FILE3
 /usr/bin/rm $THE_FILE3
-/home/$THE_USER/www/python3/py-jsx/readPlanlist.py
+/home/$THE_USER/www/python3/py-jsx/readPlanlist.py $today

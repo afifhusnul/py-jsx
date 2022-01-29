@@ -20,7 +20,7 @@ try:
 )    
 
     cur = con.cursor()
-    fout = open('dataset/tickers.csv', 'w')
+    fout = open('dataset/master.csv', 'w')
     cur.copy_to(fout, 'stock_master', sep=",")
 
 except psycopg2.DatabaseError as e:

@@ -1,0 +1,3 @@
+id_ticker,dt_trx,open_prc,high_prc,low_prc,close_prc,volume_trx,value_prc
+KPAL,2021-08-26,50,50,50,50,12100,605000
+KPAL,2021-08-18,50,50,50,50,21600,1080000

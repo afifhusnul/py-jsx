@@ -1,9 +1,10 @@
 #!/usr/bin/python3
-
+import sys
 import statistics
 import pandas as pd
 import subprocess
 import connectPg
+from pathlib import Path
 
 #--- Connect DB
 conn = connectPg.connect()
@@ -11,11 +12,23 @@ cur = conn.cursor()
 
 # --- Clear screen & get Ticker input
 subprocess.run("clear ",  shell=True)
-Stock = input("Input a ticker : ")
+if len(sys.argv) < 2:
+  Stock = input("Input a ticker : ")
+  # readStock(Stock)
+  if len(Stock) < 1:
+    print("No Input then Exit")
+    quit()
+else:
+  Stock = sys.argv[1]
+  # readStock(Stock)
+
+
+#Stock = input("Input a ticker : ")
 
 # Use a list here to insert query parameters into the query string.
 #query = """SELECT id_ticker,dt_trx,open_prc,high_prc,low_prc,close_prc,volume_trx,value_prc FROM stock_trx_jsx WHERE id_ticker = '""" + ticker + """' AND dt_trx >= '"""+ dt1 +"""' AND dt_trx <= '""" +dt2 +"""' """
 
+# def readStock(Ticker):
 query = """
   SELECT id_ticker,dt_trx,open_prc,high_prc,low_prc,close_prc,volume_trx,value_prc
   FROM stock_trx_jsx 
@@ -50,7 +63,9 @@ print("Total GAP for last 5 days : ", sum(df['tHigh_vs_pClose'][+0:][:5]))
 print("Average for last 5 days : ", statistics.mean(df['tHigh_vs_pClose'][+0:][:5]))
 print("Max High : ", max(df['tHigh_vs_pClose'][+0:][:5]))
 print("Min High : ", min(df['tHigh_vs_pClose'][+0:][:5]))
-
+print("==================")
+print("Average Volume Trx for last 5 days :", '{:,}'.format(statistics.mean(df['volume_trx'][+0:][:5]/100)),"Lot")
+print("Average Value Trx for last 5 days :", '{:,}'.format(statistics.mean(df['value_prc'][+0:][:5]/1000)),"M")
 
 cur.close()
 conn.close()
