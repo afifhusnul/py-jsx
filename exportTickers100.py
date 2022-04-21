@@ -24,7 +24,7 @@ with open('dataset/master.csv') as f:
           WHERE
           id_ticker = '"""+ Stock.upper() +"""' 
           AND dt_trx IN (SELECT dt_trx FROM bajul WHERE row_number BETWEEN 1 AND 100)
-	  AND volume_trx >= 10000
+          AND volume_trx >= 10000
           ORDER by dt_trx DESC
           """
 

@@ -30,7 +30,7 @@ else:
 
 # def readStock(Ticker):
 query = """
-  SELECT id_ticker,dt_trx,open_prc,high_prc,low_prc,close_prc,volume_trx,value_prc
+  SELECT dt_trx,open_prc,high_prc,low_prc,close_prc,volume_trx,value_prc
   FROM stock_trx_jsx 
   WHERE
   id_ticker = '"""+ Stock.upper() +"""' 
@@ -53,11 +53,12 @@ df['tHigh_vs_pClose'] = (df['high_prc'] - df['close_prc'].shift(-1)).fillna(0).a
 #df['tLow_vs_pClose'] = (df['low_prc'] - df['close_prc'].shift(-1)).fillna(0).astype(int)
 df['tHigh_vs_tOpen'] = (df['high_prc'] - df['open_prc']).fillna(0).astype(int)
 df['tOpen_vs_tClose'] = (df['close_prc'] - df['open_prc']).fillna(0).astype(int)
+df['gapHigh'] = ((df['high_prc'] / df['open_prc'].sum()) * 100).map('{:,.2f}'.format)
 
 print(df.head(n=30))
 
 #--- get data Max,Min,Avg for only last 5 Days
-
+print("Ticker ID ", Stock.upper())
 print("Total GAP for last 30 days : ", sum(df['tHigh_vs_pClose']))
 print("Total GAP for last 5 days : ", sum(df['tHigh_vs_pClose'][+0:][:5]))
 print("Average for last 5 days : ", statistics.mean(df['tHigh_vs_pClose'][+0:][:5]))
